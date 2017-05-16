@@ -1,0 +1,118 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package turismo.presentacion;
+
+import java.util.Date;
+import java.util.List;
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+import turismo.dominio.Destino;
+import turismo.servicio.TurismoService;
+
+/**
+ *
+ * @author Felipe Alonso
+ */
+@ManagedBean(name="turismo")
+@ViewScoped
+
+public class TurismoController {
+    
+    @EJB
+    private TurismoService servicio;
+    
+    private String rut;
+    private String nombre;
+    private Integer Destino;
+    private Date fechaInicio;
+    private Date fechaTermino;
+    private List<Destino> listaDestino;
+    private Integer idDestino;
+    private String vip;
+    
+    @PostConstruct
+    public void Inicio(){
+        listaDestino = servicio.buscarDestinosTodos();
+    }
+
+    public Integer getIdDestino() {
+        return idDestino;
+    }
+
+    public void setIdDestino(Integer idDestino) {
+        this.idDestino = idDestino;
+    }
+    
+    public List<Destino> getListaDestino() {
+        return listaDestino;
+    }
+
+    public void setListaDestino(List<Destino> listaDestino) {
+        this.listaDestino = listaDestino;
+    }
+    
+    public TurismoService getServicio() {
+        return servicio;
+    }
+
+    public void setServicio(TurismoService servicio) {
+        this.servicio = servicio;
+    }
+
+    public String getRut() {
+        return rut;
+    }
+
+    public void setRut(String rut) {
+        this.rut = rut;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public Integer getDestino() {
+        return Destino;
+    }
+
+    public void setDestino(Integer Destino) {
+        this.Destino = Destino;
+    }
+
+    public Date getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public void setFechaInicio(Date fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    public Date getFechaTermino() {
+        return fechaTermino;
+    }
+
+    public void setFechaTermino(Date fechaTermino) {
+        this.fechaTermino = fechaTermino;
+    }
+
+    public String isVip() {
+        return vip;
+    }
+
+    public void setVip(String vip) {
+        this.vip = vip;
+    }
+    
+    
+    
+    
+}

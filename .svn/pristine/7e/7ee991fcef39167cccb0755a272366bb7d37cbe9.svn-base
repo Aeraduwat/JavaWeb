@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>Turismo</title>
+    </h:head>
+    <h:body>
+        <p:panel header="Destino Turistico">
+            <p:fieldset legend="Datos del viaje">
+                <h:form>
+                    <h:panelGrid id="plnFormulario" columns="3">
+
+                        <p:outputLabel for="rut" value="RUT"/>
+                        <p:inputText id="rut" value="#{turismo.rut}"
+
+                                     required="true"
+                                     requiredMessage="INGRESE RUT VALIDO"
+                                     />
+                        <p:message for="rut"/>
+
+                        <p:outputLabel for="nombre" value="Nombre"/>
+                        <p:inputText id="nombre" value="#{turismo.nombre}"
+                                     required="true"
+                                     requiredMessage="INGRESE NOMBRE"
+                                     >
+                            <f:validateLength minimum="5"/>
+                        </p:inputText>           
+                        <p:message for="nombre"/>
+
+                        <p:outputLabel for="dest" value="Destino"/>
+                        <p:selectOneMenu id="dest" value="#{turismo.idDestino}">
+                            <f:selectItems var="dest" value="#{turismo.listaDestino}"
+                                           itemLabel="#{dest.nombre}"
+                                           itemValue="#{dest.id}"
+                                           />
+                        </p:selectOneMenu>
+                        <p:message for="dest"/>
+
+                        <p:outputLabel for="fechaInicio" value="Fecha Hora Inicio"/>
+                        <p:calendar id="fechaInicio"
+                                    value="#{turismo.fechaInicio}"
+                                    pattern="dd/MM/yyyy HH:mm"
+                                    mindate="today"
+                                    required="true"
+                                    requiredMessage="INGRESE FECHA"
+                                    />
+                        <p:message for ="fechaInicio"/>
+
+                        <p:outputLabel for="fechaTermino" value="Fecha Hora Termino"/>
+                        <p:calendar id="fechaTermino"
+                                    value="#{turismo.fechaTermino}"
+                                    pattern="dd/MM/yyyy HH:mm"
+                                    mindate="today"
+                                    required="true"
+                                    requiredMessage="INGRESE FECHA"
+                                    />
+                        <p:message for ="fechaTermino"/>
+
+                        <p:outputLabel for="vip" value="Habitacion VIP"/>
+                        <p:selectOneRadio id="vip" value="#{turismo.vip}"
+                                          required="true"
+                                          requiredMessage="Ingrese una opción">
+                            <f:selectItem itemLabel="SI" itemValue="SI"/>
+                            <f:selectItem itemLabel="NO" itemValue="NO"/>
+                        </p:selectOneRadio>
+                        <p:message for="vip"/>
+
+                        <h:outputText />
+                        
+                        <p:commandButton value="Calcular"
+                                         actionListener="#{turismo.calcular()}"/>
+                        
+                        
+                    </h:panelGrid>
+
+                    <p:messages autoUpdate="true" showDetail="true" globalOnly="true" />
+
+                </h:form>
+            </p:fieldset>   
+        </p:panel>
+        19013882-8 /  FELIPE MADRID  
+        <br/>
+        <h:link outcome="welcomePrimefaces" value="Primefaces welcome page" />
+    </h:body>
+</html>
+
+

@@ -1,0 +1,159 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package turismo.presentacion;
+
+import java.util.Date;
+import java.util.List;
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import turismo.dominio.Cliente;
+import turismo.dominio.Destino;
+import turismo.dominio.Periodo;
+import turismo.dominio.Viaje;
+import turismo.servicio.TurismoService;
+import turismo.servicio.TurismoServiceException;
+
+/**
+ *
+ * @author Felipe Alonso
+ */
+@ManagedBean(name = "turismo")
+@ViewScoped
+
+public class TurismoController {
+
+    @EJB
+    private TurismoService servicio;
+
+    private String rut;
+    private String nombre;
+    private Integer Destino;
+    private Date fechaInicio;
+    private Date fechaTermino;
+    private List<Destino> listaDestino;
+    private Integer idDestino;
+    private String vip;
+    private boolean VIP;
+
+    @PostConstruct
+    public void Inicio() {
+        listaDestino = servicio.buscarDestinosTodos();
+    }
+
+    public void Calcular() {
+
+        FacesContext ctx = FacesContext.getCurrentInstance();
+        FacesMessage msg;
+
+        Cliente cliente = new Cliente();
+        cliente.setNombre(nombre);
+        cliente.setRut(rut);
+
+        Destino destino = servicio.buscarDestino(idDestino);
+
+        Periodo periodo = new Periodo();
+        periodo.setInicio(fechaInicio);
+        periodo.setTermino(fechaTermino);
+
+        if (vip.equals("SI")) {
+            VIP = true;
+        } else {
+            VIP = false;
+        }
+
+        try {
+            Viaje viaje = servicio.reservar(cliente, destino, periodo, VIP);
+            mensaje(viaje);
+        } catch (TurismoServiceException turismoex) {
+            msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "ERROREN CALCULO DE VIAJE",
+                    turismoex.toString());
+            ctx.addMessage(null, msg);
+        }
+
+    }
+
+    public String getVip() {
+        return vip;
+    }
+
+    public void setVip(String vip) {
+        this.vip = vip;
+    }
+
+    public Integer getIdDestino() {
+        return idDestino;
+    }
+
+    public void setIdDestino(Integer idDestino) {
+        this.idDestino = idDestino;
+    }
+
+    public List<Destino> getListaDestino() {
+        return listaDestino;
+    }
+
+    public void setListaDestino(List<Destino> listaDestino) {
+        this.listaDestino = listaDestino;
+    }
+
+    public TurismoService getServicio() {
+        return servicio;
+    }
+
+    public void setServicio(TurismoService servicio) {
+        this.servicio = servicio;
+    }
+
+    public String getRut() {
+        return rut;
+    }
+
+    public void setRut(String rut) {
+        this.rut = rut;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public Integer getDestino() {
+        return Destino;
+    }
+
+    public void setDestino(Integer Destino) {
+        this.Destino = Destino;
+    }
+
+    public Date getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public void setFechaInicio(Date fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    public Date getFechaTermino() {
+        return fechaTermino;
+    }
+
+    public void setFechaTermino(Date fechaTermino) {
+        this.fechaTermino = fechaTermino;
+    }
+
+    private void mensaje(Viaje viaje) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+}
